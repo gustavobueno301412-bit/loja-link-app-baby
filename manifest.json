@@ -1,0 +1,16 @@
+{
+  "name": "Lojas Link App Baby",
+  "short_name": "Link Baby",
+  "description": "As melhores ofertas para o seu bebê",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f0f4f8",
+  "theme_color": "#2D5A88",
+  "icons": [
+    {
+      "src": "icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
