@@ -25,9 +25,38 @@
         .subtitulo { color: rgba(255, 255, 255, 0.9); font-size: 0.8rem; font-weight: bold; letter-spacing: 2px; margin-top: 8px; }
         .container { padding: 15px; max-width: 800px; margin: auto; }
 
-        .banner-container { width: 100%; height: 200px; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #ddd; position: relative; cursor: pointer; }
-        .banner-img { width: 100%; height: 100%; object-fit: cover; position: absolute; opacity: 0; transition: opacity 0.8s; }
-        .banner-img.active { opacity: 1; }
+        /* NOVO ESTILO DO CARROSSEL DESLIZANTE */
+        .banner-container {
+            width: 100%;
+            height: 200px !important;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background: #ffffff;
+            position: relative;
+        }
+
+        .banner-wrapper {
+            display: flex; /* Coloca os banners em linha */
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s ease-in-out; /* Suavidade no movimento */
+        }
+
+        .banner-link {
+            min-width: 100%; /* Cada banner ocupa o espaço todo */
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .banner-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Garante que a foto apareça INTEIRA */
+        }
 
         .categorias { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding: 10px 0 20px; }
         @media (max-width: 600px) {
@@ -63,7 +92,6 @@
 
         .btn-share-loja { background: #25D366; color: white; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.7rem; margin-top: 10px; display: inline-flex; align-items: center; gap: 5px; }
 
-        /* BOTÃO VOLTAR AO TOPO */
         #btnVoltarTopo { position: fixed; bottom: 20px; right: 20px; background: #2D5A88; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 20px; cursor: pointer; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; font-weight: bold; }
     </style>
 </head>
@@ -78,7 +106,10 @@
 </header>
 
 <div class="container">
-    <div id="bannerApp" class="banner-container"></div>
+    <div class="banner-container">
+        <div class="banner-wrapper" id="bannerApp">
+            </div>
+    </div>
 
     <div class="categorias">
         <button class="cat-btn active" onclick="filtrar('todos')">Todos ✨</button>
@@ -106,7 +137,6 @@
     const sheetId = '1tPuavQtvVf147OX05Y4q8DIo5_HdtkmZelq4PCXq5eg';
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=loja`;
 
-    // CONTROLE DO BOTÃO VOLTAR AO TOPO
     window.onscroll = function() {
         const btn = document.getElementById("btnVoltarTopo");
         if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
@@ -126,46 +156,44 @@
             const text = await response.text();
             const jsonData = JSON.parse(text.substring(47).slice(0, -2));
             todosOsProdutos = jsonData.table.rows;
-           
-            // EMBARALHAMENTO
             todosOsProdutos.sort(() => Math.random() - 0.5);
-           
             configurarBanners();
             mostrarProdutos();
         } catch (error) { console.error(error); }
     }
 
+    // NOVA FUNÇÃO DE BANNER AUTOMÁTICO E DESLIZANTE
     function configurarBanners() {
-        const bannerContainer = document.getElementById('bannerApp');
+        const bannerWrapper = document.getElementById('bannerApp');
         let htmlBanners = '';
         let count = 0;
+
         todosOsProdutos.forEach((row) => {
-            // Coluna C (índice 2) = imagem_banner
             const imgBanner = row.c[2] ? row.c[2].v : '';
-            // Coluna B (índice 1) = info_banner (LINK DO BANNER)
-            const linkBanner = row.c[1] ? row.c[1].v : '';
+            const linkBanner = row.c[1] ? row.c[1].v : '#';
            
             if (imgBanner && imgBanner.includes('http')) {
-                htmlBanners += `<img src="${imgBanner}" class="banner-img ${count === 0 ? 'active' : ''}" onclick="cliqueBanner('${linkBanner}', ${count})">`;
+                htmlBanners += `
+                    <a href="${linkBanner}" target="_blank" class="banner-link" onclick="gtag('event', 'click_banner', { banner_id: ${count} })">
+                        <img src="${imgBanner}" class="banner-img">
+                    </a>`;
                 count++;
             }
         });
-        bannerContainer.innerHTML = htmlBanners;
+
+        bannerWrapper.innerHTML = htmlBanners;
+
         if (count > 1) {
             let index = 0;
             setInterval(() => {
-                const imgs = document.querySelectorAll('.banner-img');
-                if(!imgs[index]) return;
-                imgs[index].classList.remove('active');
-                index = (index + 1) % imgs.length;
-                imgs[index].classList.add('active');
-            }, 4000);
+                index++;
+                if (index >= count) {
+                    index = 0;
+                }
+                const deslocamento = index * -100;
+                bannerWrapper.style.transform = `translateX(${deslocamento}%)`;
+            }, 4000); // Muda a cada 4 segundos
         }
-    }
-
-    function cliqueBanner(link, id) {
-        gtag('event', 'click_banner', { banner_id: id });
-        if(link && link !== '#' && link.includes('http')) window.open(link, '_blank');
     }
 
     function mostrarProdutos(termo = '') {
@@ -262,31 +290,5 @@
 </script>
 </body>
 </html>
-
- 
-
-
- 
-
-
- 
-
- 
-
-
- 
-
-
-
-
-
- 
-
- 
-
-
- 
-
- 
 
  
