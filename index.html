@@ -4,128 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lojas Link App Baby</title>
-
-    <meta name="theme-color" content="#2D5A88">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="manifest" href="manifest.json">
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
-    </script>
-
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f0f4f8; scroll-behavior: smooth; }
         header { background: #2D5A88; padding: 25px 10px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .titulo-app { color: #ffffff; font-size: 1.5rem; font-weight: bold; margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
-        .subtitulo { color: rgba(255, 255, 255, 0.9); font-size: 0.8rem; font-weight: bold; letter-spacing: 2px; margin-top: 8px; }
+        .titulo-app { color: #ffffff; font-size: 2.2rem; font-weight: bold; margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
         .container { padding: 15px; max-width: 800px; margin: auto; }
-
-        /* NOVO ESTILO DO CARROSSEL DESLIZANTE */
-        .banner-container {
-            width: 100%;
-            height: 200px !important;
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            background: #ffffff;
-            position: relative;
-        }
-
-        .banner-wrapper {
-            display: flex; /* Coloca os banners em linha */
-            width: 100%;
-            height: 100%;
-            transition: transform 0.8s ease-in-out; /* Suavidade no movimento */
-        }
-
-        .banner-link {
-            min-width: 100%; /* Cada banner ocupa o espaço todo */
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-        }
-
-        .banner-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain; /* Garante que a foto apareça INTEIRA */
-        }
-
+        .banner-container { width: 100%; height: 200px !important; border-radius: 20px; overflow: hidden; margin-bottom: 20px; background: #ffffff; position: relative; }
+        .banner-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.8s ease-in-out; }
+        .banner-link { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+        .banner-img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .categorias { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding: 10px 0 20px; }
-        @media (max-width: 600px) {
-            .categorias { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 5px; }
-            .cat-btn { max-width: 100% !important; padding: 10px 2px !important; font-size: 0.65rem !important; }
-        }
-
-        .cat-btn { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; color: #2D5A88; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; flex: 1 1 auto; max-width: 45%; text-align: center; }
-        .cat-btn.active { background: #2D5A88; color: white; }
-
-        .busca-container { margin-bottom: 20px; }
-        .busca-input { width: 100%; padding: 15px; border-radius: 30px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; outline: none; box-sizing: border-box; }
-
+        @media (max-width: 600px) { .categorias { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 5px; } .cat-btn { max-width: 100% !important; padding: 10px 2px !important; font-size: 0.65rem !important; } }
+        .cat-btn { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; color: #2D5A88; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; flex: 1 1 auto; text-align: center; transition: 0.3s; }
+        .cat-btn.active { background: #2D5A88 !important; color: white !important; }
+        .busca-input { width: 100%; padding: 15px; border-radius: 30px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; outline: none; box-sizing: border-box; margin-bottom: 20px; }
         .vitrine { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
         .produto-card { background: white; border-radius: 20px; padding: 12px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
-        .selo-destaque { position: absolute; top: 10px; left: 10px; background: #ff0000; color: white; font-size: 0.6rem; font-weight: bold; padding: 4px 8px; border-radius: 5px; z-index: 5; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-       
-        .btn-ws-card { position: absolute; top: 10px; right: 10px; background: #25D366; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.2); z-index: 10; }
+        .selo-destaque { position: absolute; top: 10px; left: 10px; background: #ff0000; color: white; font-size: 0.6rem; font-weight: bold; padding: 4px 8px; border-radius: 5px; z-index: 5; }
+        .btn-ws-card { position: absolute; top: 10px; right: 10px; background: #25D366; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
         .btn-ws-card img { width: 18px; height: 18px; }
-
-        .img-produto { width: 100%; height: 140px; object-fit: contain; border-radius: 15px; }
-        .produto-nome { font-size: 0.9rem; font-weight: 600; margin-top: 10px; margin-bottom: 8px; height: 35px; overflow: hidden; }
-        .produto-info { font-size: 0.7rem; color: #777; margin-bottom: 8px; height: 30px; overflow: hidden; }
-        .produto-categoria-tag { font-size: 0.6rem; color: #2D5A88; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; background: #eef4f9; display: inline-block; padding: 2px 8px; border-radius: 10px; }
+        .img-produto { width: 100%; height: 130px; object-fit: contain; border-radius: 15px; }
+        .produto-cat-label { font-size: 0.6rem; text-transform: uppercase; color: #2D5A88; background: #eef2f7; padding: 2px 8px; border-radius: 10px; margin-top: 8px; font-weight: bold; align-self: center; }
+        .produto-nome { font-size: 0.85rem; font-weight: 600; margin: 5px 0; height: 35px; overflow: hidden; }
+        .produto-desc-label { font-size: 0.7rem; color: #777; margin-bottom: 8px; height: 30px; overflow: hidden; line-height: 1.2; }
         .produto-preco { color: #2D5A88; font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; }
-
         .btn { display: flex; align-items: center; justify-content: center; gap: 4px; text-decoration: none; padding: 10px; border-radius: 12px; font-weight: bold; font-size: 0.7rem; text-transform: uppercase; }
-        .btn-hotmart { background: #FF0000; color: #ffffff; }
         .btn-ml { background: #FFE600; color: #2D3277; }
-        .btn-magalu { background: #0086FF; color: white; }
+        .btn-hotmart { background: #FF0000; color: white; }
+        .btn-magalu { background: #0088F7; color: white; }
         .btn-amazon { background: #000000; color: #00A8E1; }
-        .btn-shopee { background: #FF5722; color: white; }
+        .btn-shein { background: #000000; color: white; }
+        .btn-shopee { background: #F76404; color: white; }
+        .btn-temu { background: #C00000; color: white; }
+        .btn-aliexpress { background: #F7254E; color: white; }
+        .btn-monetizze { background: #004576; color: white; }
+        
+        #btnVoltarTopo { position: fixed; bottom: 20px; right: 20px; background: #2D5A88; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; display: none; z-index: 1000; cursor: pointer; }
+        .subtítulo-container { height: 20px; overflow: hidden; margin: 5px 0; }
+        .subtítulo-rotativo { color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; font-weight: bold; animation: rotacionar 10s infinite; }
+        @keyframes rotacionar {
+  0%, 20%   { transform: translateY(0); }       /* Item 1 */
+  25%, 45%  { transform: translateY(-20px); }   /* Item 2 */
+  50%, 70%  { transform: translateY(-40px); }   /* Item 3 */
+  75%, 95%  { transform: translateY(-60px); }   /* Item 4 (O que não estava aparecendo) */
+  100%      { transform: translateY(0); } }       /* Volta suave para o início */
 
-        .btn-share-loja { background: #25D366; color: white; border: none; padding: 8px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.7rem; margin-top: 10px; display: inline-flex; align-items: center; gap: 5px; }
-
-        #btnVoltarTopo { position: fixed; bottom: 20px; right: 20px; background: #2D5A88; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 20px; cursor: pointer; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 1000; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <header id="topo">
-    <div class="titulo-app">🍼 👶🏽 Lojas Link App Baby 👶🏻 🍼</div>
-    <div class="subtitulo">BUENO SOFTWARE 🛠️</div>
-    <button class="btn-share-loja" onclick="compartilharLoja()">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="15"> COMPARTILHAR LOJA
-    </button>
+    <div class="titulo-app">🍼👶🏻 Loja Link App Baby 👶🏽🍼</div>
+    <div class="subtítulo-container">
+     
+       <div class="subtítulo-rotativo">Artigos de Recém Nascido 🍼 (0 a 1 ano)</div>
+        <div class="subtítulo-rotativo">Lojas Link App 🛒🛍️</div>
+        <div class="subtítulo-rotativo">A maior loja de afiliados do Brasil 🛒🛍️</div>
+         <div class="subtítulo-rotativo">Bueno Software 👨🏻</div>
+    </div>
+    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
+        <button onclick="compartilharLoja()" style="background: #25D366; color: white; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; height: 42px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="18"> Compartilhar Loja
+        </button>
+        <button onclick="irParaGrupo()" style="background: white; color: #007bff; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 42px;">
+            🚪 Mais Lojas
+        </button>
+    </div>
 </header>
 
 <div class="container">
     <div class="banner-container">
-        <div class="banner-wrapper" id="bannerApp">
-            </div>
+        <div class="banner-wrapper" id="bannerApp"></div>
     </div>
-
-    <div class="categorias">
-        <button class="cat-btn active" onclick="filtrar('todos')">Todos ✨</button>
-        <button class="cat-btn" onclick="filtrar('em-alta')">Em alta 🔥</button>
-        <button class="cat-btn" onclick="filtrar('cursos')">Cursos 🎓</button>
-        <button class="cat-btn" onclick="filtrar('enxoval')">Enxoval 🧺</button>
-        <button class="cat-btn" onclick="filtrar('higiene')">Higiene 🧴</button>
-        <button class="cat-btn" onclick="filtrar('quarto')">Quarto 🛏️</button>
-        <button class="cat-btn" onclick="filtrar('passeio')">Passeio 🛒</button>
-        <button class="cat-btn" onclick="filtrar('alimentação')">Alimentação 🥣</button>
+    <div class="categorias" id="grupoCategorias">
+        <button class="cat-btn active" onclick="filtrar('todos', this)">Todos ✨</button>
+        <button class="cat-btn" onclick="filtrar('em-alta', this)">Em alta 🔥</button>
+        <button class="cat-btn" onclick="filtrar('cursos', this)">Cursos 🎓</button>
+        <button class="cat-btn" onclick="filtrar('enxoval', this)">Enxoval 🧺</button>
+        <button class="cat-btn" onclick="filtrar('higiene', this)">Higiene 🧴</button>
+        <button class="cat-btn" onclick="filtrar('quarto', this)">Quarto 🛏️</button>
+        <button class="cat-btn" onclick="filtrar('passeio', this)">Passeio 🛒</button>
+        <button class="cat-btn" onclick="filtrar('alimentação', this)">Alimentação 🥣</button>
     </div>
-
-    <div class="busca-container">
-        <input type="text" id="inputBusca" class="busca-input" placeholder="🔍 O que você procura hoje?" onkeyup="executarBusca()">
-    </div>
-
+    <input type="text" id="inputBusca" class="busca-input" placeholder="🔍 Busque Nome, Loja ou Preço..." onkeyup="executarBusca()">
     <div id="vitrine" class="vitrine"></div>
 </div>
 
@@ -137,18 +98,53 @@
     const sheetId = '1tPuavQtvVf147OX05Y4q8DIo5_HdtkmZelq4PCXq5eg';
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=loja`;
 
+    const segmentosLojas = [
+        { nome: "Artigos de Recém Nascido 0 a 1", emoji: "👶" },
+        { nome: "Artigos Pet em Geral", emoji: "🐾" },
+        { nome: "Artigos Esportivos", emoji: "⚽" },
+        { nome: "Artigos de Informática", emoji: "💻" },
+        { nome: "Moda Feminina", emoji: "👗" },
+        { nome: "Moda Masculina", emoji: "👕" },
+        { nome: "Celulares e Acessórios", emoji: "📱" },
+        { nome: "Cama, Mesa e Banho", emoji: "🛏️" },
+        { nome: "Moda infantil 1 a 10 anos", emoji: "👦" },
+        { nome: "Moda Juvenil 11 a 17 anos", emoji: "👩‍🦰" },
+        { nome: "Moda Plus Size e King Size Masculino", emoji: "👕" },
+        { nome: "Moda Plus Size e King Size Feminina", emoji: "👗" },
+        { nome: "Camping, Pesca, Piscina e Praia", emoji: "🏕️" },
+        { nome: "Cosméticos e Perfumaria", emoji: "💄" },
+        { nome: "Papelaria e Escritório", emoji: "📝" },
+        { nome: "Peças e Acessórios de Carro", emoji: "🚗" },
+        { nome: "Peças e Acessórios de Moto", emoji: "🏍️" },
+        { nome: "Eletrodomésticos em Geral", emoji: "📺" },
+        { nome: "Móveis e Decoração", emoji: "🛋️" },
+        { nome: "Instrumentos Musicais", emoji: "🎸" },
+        { nome: "Ferramentas, Casa e Construção", emoji: "🛠️" },
+        { nome: "Consoles, Jogos e Acessórios", emoji: "🎮" },
+        { nome: "Conteúdo e Entretenimento Nerd", emoji: "🤓" },
+        { nome: "Utilidades Domésticas", emoji: "🍳" },
+        { nome: "Moda Skate", emoji: "🛹" },
+        { nome: "Livros Físicos", emoji: "📚" },
+        { nome: "Brinquedos", emoji: "🧸" },
+        { nome: "Plantas, Jardim e Paisagismo", emoji: "🌻" },
+        { nome: "Malas e Viagem", emoji: "🧳" },
+        { nome: "Artigos para Festa", emoji: "🥳" },
+        { nome: "Comidas e Bebidas", emoji: "🍕" },
+        { nome: "Artigos Hospitalares", emoji: "🏥" },
+        { nome: "Tecnologia e Energia Solar", emoji: "☀️" },
+        { nome: "Segurança e Monitoramento", emoji: "🛡️" },
+        { nome: "Equipamentos para o campo", emoji: "🚜" },
+        { nome: "Melhor Idade Masculino", emoji: "👴" },
+        { nome: "Melhor Idade Feminino", emoji: "👵" },
+        { nome: "Jóias e Semi-Jóias", emoji: "💎" }
+    ];
+
     window.onscroll = function() {
         const btn = document.getElementById("btnVoltarTopo");
-        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
-            btn.style.display = "block";
-        } else {
-            btn.style.display = "none";
-        }
+        btn.style.display = (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) ? "block" : "none";
     };
 
-    function voltarAoTopo() {
-        window.scrollTo({top: 0, behavior: 'smooth'});
-    }
+    function voltarAoTopo() { window.scrollTo({top: 0, behavior: 'smooth'}); }
 
     async function carregarDados() {
         try {
@@ -159,136 +155,141 @@
             todosOsProdutos.sort(() => Math.random() - 0.5);
             configurarBanners();
             mostrarProdutos();
-        } catch (error) { console.error(error); }
+        } catch (error) { console.error("Erro:", error); }
     }
 
-    // NOVA FUNÇÃO DE BANNER AUTOMÁTICO E DESLIZANTE
     function configurarBanners() {
         const bannerWrapper = document.getElementById('bannerApp');
         let htmlBanners = '';
         let count = 0;
-
         todosOsProdutos.forEach((row) => {
-            const imgBanner = row.c[2] ? row.c[2].v : '';
-            const linkBanner = row.c[1] ? row.c[1].v : '#';
-           
+            const imgBanner = (row.c[2] && row.c[2].v) ? row.c[2].v : '';
+            const linkBanner = (row.c[1] && row.c[1].v) ? row.c[1].v : '#';
             if (imgBanner && imgBanner.includes('http')) {
-                htmlBanners += `
-                    <a href="${linkBanner}" target="_blank" class="banner-link" onclick="gtag('event', 'click_banner', { banner_id: ${count} })">
-                        <img src="${imgBanner}" class="banner-img">
-                    </a>`;
+                htmlBanners += `<a href="${linkBanner}" target="_blank" class="banner-link"><img src="${imgBanner}" class="banner-img"></a>`;
                 count++;
             }
         });
-
         bannerWrapper.innerHTML = htmlBanners;
-
         if (count > 1) {
             let index = 0;
             setInterval(() => {
-                index++;
-                if (index >= count) {
-                    index = 0;
-                }
-                const deslocamento = index * -100;
-                bannerWrapper.style.transform = `translateX(${deslocamento}%)`;
-            }, 4000); // Muda a cada 4 segundos
+                index = (index + 1) % count;
+                bannerWrapper.style.transform = `translateX(${index * -100}%)`;
+            }, 4000);
         }
     }
 
     function mostrarProdutos(termo = '') {
         let html = '';
-        const termoBusca = termo.toLowerCase();
-
+        const termoBusca = termo.toLowerCase().trim();
         todosOsProdutos.forEach((row) => {
             if (!row.c[3] || row.c[3].v === "Nome") return;
-           
             const nome = row.c[3].v;
-            const preco = row.c[4] ? row.c[4].f || row.c[4].v : '0,00';
-            const categoriaOriginal = row.c[5] ? row.c[5].v : '';
-            const categoriaChave = categoriaOriginal.toLowerCase().trim();
-            const destaque = row.c[6] ? row.c[6].v.toLowerCase().trim() : '';
-            const tipo = row.c[7] ? row.c[7].v.toLowerCase().trim() : '';
+            const preco = row.c[4] ? (row.c[4].f || row.c[4].v).toString() : '0,00';
+            const categoria = row.c[5] ? row.c[5].v : '';
+            const destaque = row.c[6] ? row.c[6].v.toLowerCase() : '';
+            const tipo = row.c[7] ? row.c[7].v.toLowerCase() : '';
             const foto = row.c[8] ? row.c[8].v : '';
             const link = row.c[9] ? row.c[9].v : '#';
-            const info = row.c[10] ? row.c[10].v : '';
+            const desc = (row.c[10] && row.c[10].v) ? row.c[10].v : 'Clique para ver mais detalhes.';
 
-            const bateDestaque = (categoriaAtual === 'em-alta' && destaque === 'sim');
-            const bateCategoria = (categoriaAtual === 'todos' || categoriaChave === categoriaAtual || bateDestaque);
-            const bateBusca = nome.toLowerCase().includes(termoBusca) || tipo.includes(termoBusca);
+            // BUSCA EM NOME, LOJA E PREÇO
+            const correspondeBusca = nome.toLowerCase().includes(termoBusca) ||
+                                     tipo.includes(termoBusca) ||
+                                     preco.includes(termoBusca);
 
-            if (bateCategoria && bateBusca) {
-                let seloHtml = destaque === 'sim' ? `<div class="selo-destaque">MAIS VENDIDO 🔥</div>` : '';
-                let btnClass = 'btn-ml', btnTexto = `🛒 MERCADO LIVRE 🤝🏻 `;
+            if ((categoriaAtual === 'todos' || categoria.toLowerCase().trim() === categoriaAtual || (categoriaAtual === 'em-alta' && destaque === 'sim')) && correspondeBusca) {
+                let btnClass = 'btn-ml', btnTexto = `🛒 MERCADO LIVRE 🤝🏻`;
+                if(tipo.includes('hotmart')) { btnClass = 'btn-hotmart'; btnTexto = `🛒 HOTMART 🔥`; }
+                else if(tipo.includes('magalu')) { btnClass = 'btn-magalu'; btnTexto = `🛒 MAGALU 🙋🏻‍♂️`; }
+                else if(tipo.includes('amazon')) { btnClass = 'btn-amazon'; btnTexto = `🛒 AMAZON 📦`; }
+                else if(tipo.includes('shopee')) { btnClass = 'btn-shopee'; btnTexto = `🛒 SHOPEE 🛍️`; }
+                else if(tipo.includes('shein')) { btnClass = 'btn-shein'; btnTexto = `🛒 SHEIN 🏷️`; }
+                else if(tipo.includes('temu')) { btnClass = 'btn-temu'; btnTexto = `🛒 TEMU 👔`; }
+                else if(tipo.includes('aliexpress')) { btnClass = 'btn-aliexpress'; btnTexto = `🛒 ALIEXPRESS 👜`; }
+                else if(tipo.includes('monetizze')) { btnClass = 'btn-monetizze'; btnTexto = `🛒 MONETIZZE 💰`; }
                
-                if(tipo === 'hotmart') { btnClass = 'btn-hotmart'; btnTexto = `🛒 HOTMART 🔥`; }
-                else if(tipo === 'magalu') { btnClass = 'btn-magalu'; btnTexto = `🛒 MAGALU 🙋🏻‍♀️`; }
-                else if(tipo === 'amazon') { btnClass = 'btn-amazon'; btnTexto = `🛒 Amazon 📦`; }
-                else if(tipo === 'shopee') { btnClass = 'btn-shopee'; btnTexto = `🛒 Shopee 🛍️`; }
-
-                html += `
-                    <div class="produto-card">
-                        ${seloHtml}
-                        <button class="btn-ws-card" onclick="compartilharProduto('${nome}', '${link}')">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-                        </button>
-                        <div>
-                            <img src="${foto}" class="img-produto" onerror="this.src='https://via.placeholder.com/150'">
-                            <div class="produto-nome">${nome}</div>
-                            <div class="produto-info">${info}</div>
-                            <div class="produto-categoria-tag">${categoriaOriginal}</div>
-                        </div>
-                        <div>
-                            <div class="produto-preco">R$ ${preco}</div>
-                            <a href="${link}" target="_blank" class="btn ${btnClass}" onclick="gtag('event', 'click_venda', {item: '${nome}'})">${btnTexto}</a>
-                        </div>
-                    </div>`;
+                html += `<div class="produto-card">
+                    ${destaque === 'sim' ? '<div class="selo-destaque">MAIS VENDIDO 🔥</div>' : ''}
+                    <button class="btn-ws-card" onclick="compartilharProduto('${nome}', '${link}')"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></button>
+                    <img src="${foto}" class="img-produto" onerror="this.src='https://via.placeholder.com/150'">
+                    <div class="produto-cat-label">${categoria}</div>
+                    <div class="produto-nome">${nome}</div>
+                    <div class="produto-desc-label">${desc}</div>
+                    <div class="produto-preco">R$ ${preco}</div>
+                    <a href="${link}" target="_blank" class="btn ${btnClass}">${btnTexto}</a>
+                </div>`;
             }
         });
         document.getElementById('vitrine').innerHTML = html;
     }
 
-    function filtrar(cat) {
+    function filtrar(cat, btn) {
         categoriaAtual = cat;
-        gtag('event', 'select_category', { category: cat });
-        document.querySelectorAll('.cat-btn').forEach(b => {
-            b.classList.toggle('active', b.innerText.toLowerCase().includes(cat.replace('-',' ')) || (cat==='todos' && b.innerText.includes('Todos')));
-        });
-        mostrarProdutos(document.getElementById('inputBusca').value);
+        // Remove 'active' de todos os botões e coloca só no clicado
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        if(btn) btn.classList.add('active');
+        mostrarProdutos();
     }
 
     function executarBusca() { mostrarProdutos(document.getElementById('inputBusca').value); }
 
-    function compartilharLoja() {
-        const txt = 'Confira as melhores ofertas para o seu bebê na Lojas Link App Baby!';
-        const urlLoja = window.location.href;
-        gtag('event', 'share', { method: 'WhatsApp', content_type: 'app' });
-        if(navigator.share) {
-            navigator.share({ title: 'Link Baby', text: txt, url: urlLoja });
+    async function compartilharProduto(nome, link) {
+        if (navigator.share) {
+            try { await navigator.share({ title: nome, text: `Olha isso: ${nome}`, url: link }); } catch (err) {}
         } else {
-            window.open(`https://api.whatsapp.com/send?text=${txt} ${urlLoja}`);
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(nome + ' ' + link)}`, '_blank');
         }
     }
 
-    function compartilharProduto(nome, link) {
-        const txt = `Olha essa oferta na Lojas Link Baby: ${nome}`;
-        gtag('event', 'share', { method: 'WhatsApp', content_type: 'produto', item_id: nome });
-        if(navigator.share) {
-            navigator.share({ title: nome, text: txt, url: link });
+    async function compartilharLoja() {
+        if (navigator.share) {
+            try { await navigator.share({ title: 'Loja Link App Baby', text: 'Confira!', url: window.location.href }); } catch (err) {}
         } else {
-            window.open(`https://api.whatsapp.com/send?text=${txt} ${link}`);
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(window.location.href)}`, '_blank');
         }
     }
 
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').catch(err => console.log('SW erro', err));
+    function irParaGrupo() {
+        let modal = document.createElement('div');
+        modal.id = "meuModalFlutuante";
+        modal.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; display:flex; justify-content:center; align-items:center;";
+        let conteudo = document.createElement('div');
+        conteudo.style = "background:#fff; width:90%; max-width:400px; max-height:80vh; overflow-y:auto; border-radius:15px; padding:20px; position:relative; font-family: sans-serif;";
+      
+        let linkA = "#";
+        for(let i=0; i < todosOsProdutos.length; i++){
+           if(todosOsProdutos[i].c[0] && todosOsProdutos[i].c[0].v && todosOsProdutos[i].c[0].v.includes('http')){
+               linkA = todosOsProdutos[i].c[0].v;
+               break;
+           }
+        }
+
+        let htmlLista = `<h3 style="text-align:center; margin-bottom:20px;">Escolha uma Loja</h3>
+            <button onclick="document.getElementById('meuModalFlutuante').remove()" style="position:absolute; top:10px; right:10px; border:none; background:none; font-size:20px; cursor:pointer;">✕</button>`;
+      
+        segmentosLojas.forEach((seg, index) => {
+            let acao = (index === 0 && linkA !== "#")
+                ? `<a href="${linkA}" target="_blank" style="background:#25D366; color:white; padding:6px 12px; border-radius:8px; text-decoration:none; font-size:12px; font-weight:bold;">Entrar</a>`
+                : `<span style="color:#bbb; font-size:12px; font-style:italic;">Em breve 🚀</span>`;
+            htmlLista += `<div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid #eee;"><span style="font-size:14px;">${seg.emoji} ${seg.nome}</span>${acao}</div>`;
         });
+        conteudo.innerHTML = htmlLista;
+        modal.appendChild(conteudo);
+        document.body.appendChild(modal);
     }
 
-    window.onload = carregarDados;
+    carregarDados();
+    
+   // Verifique se as aspas e os parênteses estão assim:
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => console.log('PWA: Ativado com sucesso!'))
+            .catch(err => console.log('PWA: Erro ao carregar', err));
+    });
+}
 </script>
 </body>
 </html>
-
- 
