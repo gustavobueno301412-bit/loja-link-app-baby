@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lojas Link App Pet</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #83BEEC; scroll-behavior: smooth; }
-        header { background: #171778; padding: 25px 10px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #c6d4e1; scroll-behavior: smooth; }
+        header { background: #44749d; padding: 25px 10px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .titulo-app { color: #ffffff; font-size: 1.5rem; font-weight: bold; margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
         .container { padding: 15px; max-width: 800px; margin: auto; }
         .banner-container { width: 100%; height: 200px !important; border-radius: 20px; overflow: hidden; margin-bottom: 20px; background: #ffffff; position: relative; }
@@ -20,8 +20,8 @@
             .cat-btn { max-width: 100% !important; padding: 10px 2px !important; font-size: 0.60rem !important; border-radius: 10px !important; }
         }
 
-        .cat-btn { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; color: #171778; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; flex: 1 1 auto; text-align: center; transition: 0.3s; }
-        .cat-btn.active { background: #171778 !important; color: white !important; }
+        .cat-btn { background: white; padding: 10px 15px; border-radius: 15px; font-size: 0.8rem; font-weight: bold; color: #44749d; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; flex: 1 1 auto; text-align: center; transition: 0.3s; }
+        .cat-btn.active { background: #44749d !important; color: white !important; }
         .busca-input { width: 100%; padding: 15px; border-radius: 30px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05); text-align: center; outline: none; box-sizing: border-box; margin-bottom: 20px; }
         .vitrine { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
         .produto-card { background: white; border-radius: 20px; padding: 12px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
@@ -29,10 +29,10 @@
         .btn-ws-card { position: absolute; top: 10px; right: 10px; background: #25D366; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
         .btn-ws-card img { width: 18px; height: 18px; }
         .img-produto { width: 100%; height: 130px; object-fit: contain; border-radius: 15px; }
-        .produto-cat-label { font-size: 0.6rem; text-transform: uppercase; color: #171778; background: #eef2f7; padding: 2px 8px; border-radius: 10px; margin-top: 8px; font-weight: bold; align-self: center; }
+        .produto-cat-label { font-size: 0.6rem; text-transform: uppercase; color: #44749d; background: #eef2f7; padding: 2px 8px; border-radius: 10px; margin-top: 8px; font-weight: bold; align-self: center; }
         .produto-nome { font-size: 0.85rem; font-weight: 600; margin: 5px 0; height: 35px; overflow: hidden; }
         .produto-desc-label { font-size: 0.7rem; color: #777; margin-bottom: 8px; height: 30px; overflow: hidden; line-height: 1.2; }
-        .produto-preco { color: #171778; font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; }
+        .produto-preco { color: #44749d; font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; }
         .btn { display: flex; align-items: center; justify-content: center; gap: 4px; text-decoration: none; padding: 10px; border-radius: 12px; font-weight: bold; font-size: 0.7rem; text-transform: uppercase; }
         .btn-ml { background: #FFE600; color: #2D3277; }
         .btn-hotmart { background: #FF0000; color: white; }
@@ -44,7 +44,7 @@
         .btn-aliexpress { background: #F7254E; color: white; }
         .btn-monetizze { background: #004576; color: white; }
 
-        #btnVoltarTopo { position: fixed; bottom: 20px; right: 20px; background: #171778; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; display: none; z-index: 1000; cursor: pointer; }
+        #btnVoltarTopo { position: fixed; bottom: 20px; right: 20px; background: #44749d; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; display: none; z-index: 1000; cursor: pointer; }
         .subtítulo-container { height: 35px; overflow: hidden; margin: 10px 0; }
         .subtítulo-rotativo { color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; font-weight: bold; animation: rotacionar 15s infinite; }
         @keyframes rotacionar {
@@ -69,7 +69,7 @@
         <button onclick="compartilharLoja()" style="background: #25D366; color: white; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; height: 42px;">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="18"> Compartilhar
         </button>
-        <button onclick="irParaGrupo()" style="background: white; color: #171778; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 42px;">
+        <button onclick="irParaGrupo()" style="background: white; color: #44749d; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 42px;">
             🚪 Mais Lojas
         </button>
     </div>
