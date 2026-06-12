@@ -1,19 +1,275 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-XKVQ10BXWN"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-XKVQ10BXWN'); </script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lojas Link App Baby</title>
+    <title>Link Up Cruzeiro e Regiões</title>
     <style>
+        /* ========================================================
+           NOVO ESTILO: Tela Inicial Obrigatória de Termos de Uso
+           ======================================================== */
+        .tela-inicial-termos {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #c6d4e1;
+            z-index: 999999; /* Fica acima de absolutamente tudo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+            box-sizing: border-box;
+            padding: 15px;
+        }
+
+        .box-termos-container {
+            background: white;
+            width: 100%;
+            max-width: 500px;
+            height: 90vh;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .titulo-termos {
+            color: #44749d;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .abas-termos {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .aba-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.85rem;
+            background: #eef2f7;
+            color: #666;
+            transition: 0.3s;
+        }
+
+        .aba-btn.aba-ativa {
+            background: #44749d;
+            color: white;
+        }
+
+        .texto-termos-scroll {
+            flex: 1;
+            overflow-y: auto;
+            background: #f8f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: left;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .texto-termos-scroll h4 {
+            margin-top: 0;
+            color: #44749d;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .btn-aceitar-termos {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+            transition: 0.2s;
+        }
+        .btn-aceitar-termos:active { transform: scale(0.98); }
+
+        /* Estilos Originais do Gustavo */
+        .modal-detalhes-linkup {
+            display: none;
+            position: fixed;
+            z-index: 11000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-detalhes-content {
+            background: white;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            padding: 25px;
+            border-radius: 0;
+            position: relative;
+            max-height: 100vh;
+            overflow-y: auto;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .fechar-detalhes {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .btn-zap-modal {
+            background: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .btn-seguir-modal {
+            background: #44749d;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .btn-denunciar-modal {
+            background: #d9534f;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-denunciar-modal:active { transform: scale(0.98); }
+
+        .titulo-grade-fotos {
+            color: #44749d;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 20px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .grade-fotos-gustavo {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin: 10px 0 20px 0;
+            padding: 10px;
+            background: #f1f5f9;
+            border-radius: 15px;
+        }
+
+        .grade-fotos-gustavo img, .grade-fotos-gustavo video, .grade-fotos-gustavo iframe {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 10px;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: block;
+            cursor: pointer;
+        }
+       
+        .video-depo-box {
+            position: relative;
+            padding-bottom: 177%;
+            height: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            grid-column: span 1;
+        }
+        .video-depo-box iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+        }
+
+        .vitrine .produto-card:first-child::after {
+            content: "👆";
+            position: absolute;
+            top: 95px;
+            right: -10px;
+            font-size: 30px;
+            background: white;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            animation: cliqueAnim 1.5s infinite;
+            z-index: 20;
+        }
+
+        @keyframes cliqueAnim {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #c6d4e1; scroll-behavior: smooth; }
         header { background: #44749d; padding: 25px 10px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .titulo-app { color: #ffffff; font-size: 1.5rem; font-weight: bold; margin: 0; display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
         .container { padding: 15px; max-width: 800px; margin: auto; }
         .banner-container { width: 100%; height: 200px !important; border-radius: 20px; overflow: hidden; margin-bottom: 20px; background: #ffffff; position: relative; }
         .banner-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.8s ease-in-out; }
-        .banner-link { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; text-decoration: none; }
         .banner-img { max-width: 100%; max-height: 100%; object-fit: contain; }
        
         .categorias { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding: 10px 0 20px; }
@@ -28,7 +284,7 @@
         .vitrine { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; }
         .produto-card { background: white; border-radius: 20px; padding: 12px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; position: relative; }
         .selo-destaque { position: absolute; top: 10px; left: 10px; background: #ff0000; color: white; font-size: 0.6rem; font-weight: bold; padding: 4px 8px; border-radius: 5px; z-index: 5; }
-        .btn-ws-card { position: absolute; top: 10px; right: 10px; background: #25D366; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
+        .btn-ws-card { position: absolute; top: 10px; right: 10px; background: #44749d; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; }
         .btn-ws-card img { width: 18px; height: 18px; }
         .img-produto { width: 100%; height: 130px; object-fit: contain; border-radius: 15px; }
         .produto-cat-label { font-size: 0.6rem; text-transform: uppercase; color: #44749d; background: #eef2f7; padding: 2px 8px; border-radius: 10px; margin-top: 8px; font-weight: bold; align-self: center; }
@@ -45,6 +301,26 @@
         .btn-temu { background: #C00000; color: white; }
         .btn-aliexpress { background: #F7254E; color: white; }
         .btn-monetizze { background: #004576; color: white; }
+        .btn-whatsapp { background: #25D366; color: white; }
+
+        .btn-like {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 5px 12px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin: 5px auto 10px;
+            transition: 0.3s;
+            color: #44749d;
+            font-weight: bold;
+        }
+        .btn-like:active { transform: scale(0.9); }
+        .like-icon { color: #e74c3c; font-size: 1.1rem; }
 
         #btnVoltarTopo { position: fixed; bottom: 20px; right: 20px; background: #44749d; color: white; border: none; width: 45px; height: 45px; border-radius: 50%; display: none; z-index: 1000; cursor: pointer; }
         .subtítulo-container { height: 35px; overflow: hidden; margin: 10px 0; }
@@ -55,24 +331,119 @@
             50%, 70%  { transform: translateY(-70px); }
             75%, 95%  { transform: translateY(-105px); }
             100%      { transform: translateY(0); } }
+
+        .btn-anuncie-linkup {
+            position: fixed !important; bottom: 110px !important; right: 20px !important; left: auto !important;
+            background-color: #ff8c00 !important; color: white !important;
+            width: 85px !important; height: 85px !important; border-radius: 50% !important;
+            display: flex !important; align-items: center !important; justify-content: center !important;
+            font-size: 13px !important; font-weight: bold !important; text-align: center !important;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.4) !important; cursor: pointer !important;
+            z-index: 9999 !important; line-height: 1.1 !important; border: 2px solid white !important;
+        }
+        .modal-linkup {
+            display:none; position: fixed; top: 0; left: 0; transform: none;
+            width: 100%; height: 100%;
+            max-width: none; background: white; border-radius: 0; z-index: 10000;
+            box-shadow: none; overflow-y: auto; max-height: 100vh;
+            font-family: sans-serif; padding: 20px; box-sizing: border-box;
+        }
+        .overlay-linkup {
+            display:none; position: fixed; top:0; left:0; width:100%; height:100%;
+            background:rgba(0,0,0,0.7); z-index: 9998;
+        }
+        .input-linkup { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
+        .btn-plano {
+            width:100%; border:2px solid #eee; padding:15px; margin-bottom:12px;
+            border-radius:12px; background:white; cursor:pointer; text-align: left;
+            display: flex; align-items: center; gap: 10px; justify-content: space-between;
+        }
+
+        .secao-depoimentos { text-align: left; margin: 20px 0; background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #eee; }
+        .depoimento-item { border-bottom: 1px solid #f1f1f1; padding: 10px 0; }
+        .depoimento-item:last-child { border: none; }
+        .depoimento-meta { font-size: 13px; font-weight: bold; color: #44749d; margin-bottom: 4px; display: flex; justify-content: space-between; }
+        .depoimento-texto { font-size: 14px; color: #555; font-style: italic; line-height: 1.4; }
+        .btn-dar-depoimento { background: #f39c12; color: white; border: none; padding: 10px; border-radius: 10px; width: 100%; font-weight: bold; cursor: pointer; margin-top: 10px; }
+
+        .modal-depoimento-gustavo { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:12000; align-items:center; justify-content:center; }
+        .modal-depoimento-box { background:white; width:90%; max-width:400px; padding:20px; border-radius:20px; text-align:center; }
+        .star-rating { font-size: 30px; margin: 15px 0; cursor: pointer; color: #ddd; }
+        .star-rating .selected { color: #f39c12; }
+
+        .modal-denuncia-gustavo { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:13000; align-items:center; justify-content:center; }
+
+        .gu-zoom-modal {
+            display: none;
+            position: fixed;
+            z-index: 20000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            align-items: center;
+            justify-content: center;
+        }
+        .gu-zoom-img {
+            max-width: 95%;
+            max-height: 90%;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .gu-zoom-video-container {
+            width: 95%;
+            height: 80%;
+            max-width: 800px;
+        }
+        .gu-zoom-fechar {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 21000;
+        }
     </style>
 </head>
 <body>
 
+<!-- ========================================================
+     NOVO ELEMENTO: Estrutura da Tela de Boas-Vindas e Termos
+     ======================================================== -->
+<div id="telaInicialTermos" class="tela-inicial-termos">
+    <div class="box-termos-container">
+        <h2 class="titulo-termos">📋 Termos de Uso & Responsabilidade</h2>
+        <p style="font-size: 13px; color: #666; margin: 0 0 15px 0;">Selecione a categoria abaixo para ler nossas diretrizes obrigatórias:</p>
+       
+        <div class="abas-termos">
+            <button id="btnAbaCliente" class="aba-btn aba-ativa" onclick="alternarAbasTermos('cliente')">👤 SOU CLIENTE</button>
+            <button id="btnAbaPrestador" class="aba-btn" onclick="alternarAbasTermos('prestador')">🛠️ SOU AUTÔNOMO</button>
+        </div>
+
+        <!-- Conteúdo Rolável dos Termos -->
+        <div id="textoTermos" class="texto-termos-scroll">
+            <!-- Os textos serão injetados dinamicamente via JavaScript pelas funções abaixo -->
+        </div>
+
+        <button onclick="aceitarTermosIniciais()" class="btn-aceitar-termos">LI E ACEITO OS TERMOS 👍</button>
+    </div>
+</div>
+
 <header id="topo">
-    <div class="titulo-app">🍼👶🏻 Loja Link App Baby 👶🏽🍼</div>
+    <div class="titulo-app">🧑🏾 Link Up Cruzeiro e Regiões 👩🏻</div>
     <div class="subtítulo-container">
-       <div class="subtítulo-rotativo">Tudo para o seu Bebê 🍼👶🏻👶🏽🍼</div>
+       <div class="subtítulo-rotativo">Autônomos de Cruzeiro e Região 👩🏻🧑🏾</div>
        <div class="subtítulo-rotativo">Bueno Software 👨🏻</div>
-        <div class="subtítulo-rotativo">Lojas Link App 🛒🛍️</div>
-        <div class="subtítulo-rotativo">A maior loja de afiliados do Brasil 🛒🛍️</div>
+       <div class="subtítulo-rotativo">⚠️ Atenção antes de contratar ⚠️</div>
+       <div class="subtítulo-rotativo">🚨 Fique sempre atento com golpes 🚨</div>
     </div>
     <div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
         <button onclick="compartilharLoja()" style="background: #25D366; color: white; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px; height: 42px;">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="18"> Compartilhar
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="18"> Compartilhar App
         </button>
         <button onclick="irParaGrupo()" style="background: white; color: #44749d; border: none; border-radius: 12px; padding: 10px 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; height: 42px;">
-            🚪 Mais Lojas
+            Ver Mais Lojas
         </button>
     </div>
 </header>
@@ -82,32 +453,240 @@
         <div class="banner-wrapper" id="bannerApp"></div>
     </div>
     <div class="categorias" id="grupoCategorias">
-        <button class="cat-btn active" onclick="filtrar('todos', this)">Todos ✨</button>
-        <button class="cat-btn" onclick="filtrar('em-alta', this)">Em alta 🔥</button>
-        <button class="cat-btn" onclick="filtrar('cursos', this)">Cursos 🎓</button>
-        <button class="cat-btn" onclick="filtrar('enxoval', this)">Enxoval 🧺</button>
-        <button class="cat-btn" onclick="filtrar('higiene', this)">Higiene 🧴</button>
-        <button class="cat-btn" onclick="filtrar('quarto', this)">Quarto 🛏️</button>
-        <button class="cat-btn" onclick="filtrar('passeio', this)">Passeio 🛒</button>
-        <button class="cat-btn" onclick="filtrar('alimentação', this)">Alimentação 🥣</button>
+        <button class="cat-btn active" onclick="filtrar('todos', this)"> ✨ Todos ✨</button>
+        <button class="cat-btn" onclick="filtrar('em-destaque', this)">🔥 Em Destaque 🔥</button>
+        <button class="cat-btn" onclick="filtrar('transporte', this)">🚕 Transporte 🚚</button>
+        <button class="cat-btn" onclick="filtrar('manutenção', this)">🔨 Manutenção 🧹</button>
+        <button class="cat-btn" onclick="filtrar('alimentação', this)">👩🏻‍🍳 Alimentação 🍰</button>
+        <button class="cat-btn" onclick="filtrar('estética', this)">👄 Estética 💄</button>
+        <button class="cat-btn" onclick="filtrar('cuidados', this)">👩🏻‍⚕️ Cuidados 👴🏻</button>
+        <button class="cat-btn" onclick="filtrar('diversos', this)">👨🏻‍🏫 Diversos ✂️</button>
     </div>
-    <input type="text" id="inputBusca" class="busca-input" placeholder="🔍 Produto, Loja ou Preço..." onkeyup="executarBusca()">
+    <input type="text" id="inputBusca" class="busca-input" placeholder="🔍 Autônomo, Serviço ou Cidade..." onkeyup="executarBusca()">
     <div id="vitrine" class="vitrine"></div>
 </div>
 
 <button id="btnVoltarTopo" onclick="voltarAoTopo()">↑</button>
 
+<div class="btn-anuncie-linkup" onclick="abrirCadastro()">ANUNCIE<br>AQUI</div>
+<div id="overlay" class="overlay-linkup" onclick="fecharModal()"></div>
+
+<div id="modalCadastro" class="modal-linkup">
+    <div onclick="fecharModal()" style="position: absolute; top: 10px; right: 15px; font-size: 26px; color: #999; cursor: pointer; font-weight: bold;">&times;</div>
+
+    <div id="etapa1" style="text-align: center; padding-top: 15px;">
+        <h2 style="color: #44749d;">Deseja oferecer seus services no aplicativo? 💼</h2>
+        <button onclick="irParaEtapa(2)" style="width: 100%; background: #44749d; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">SIM, QUERO ANUNCIAR</button>
+        <button onclick="fecharModal()" style="width: 100%; background: #eee; color: #666; border: none; padding: 10px; border-radius: 10px; cursor: pointer;">NÃO, SOU APENAS CLIENTE</button>
+    </div>
+
+    <div id="etapa2" style="display:none; padding-top: 10px;">
+        <h3 style="color: #44749d;">Cadastro Profissional 📝</h3>
+        <div style="background: #f9f9f9; padding: 8px; font-size: 11px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ddd;">
+            Autorizo uso de imagem/dados e aviso se mudar de WhatsApp,
+            <br><br>*** Aviso uso do aplicativo ***: <br><br>Cláusula X - Da Ausência de Vínculo empregatício e relação de trabalho.<br><br>X.1. O presente aplicativo atua exclusivamente como uma ferramenta tecnológica de intermediação, aproximando prestadores de serviços autônomos e potenciais tomadores/clientes.
+                  <br><br>X.2. Fica expressamente estabelecido que o uso da plataforma NÃO institui, sob nenhuma hipótese, qualquer tipo de vínculo empregatício, relação de trabalho, subordinação, pessoalidade, habitualidade ou dependência econômica entre o aplicativo (e seus desenvolvedores/administradores) e o prestador de serviço autônomo, nos termos da legislação vigente.
+                  <br><br>X.3. O prestador de serviço reconhece que possui total autonomia para definir seus horários, valores, formas de atuação e aceitação de demandas, sendo o único e exclusivo responsável por quaisquer obrigações fiscais, tributárias, previdenciárias ou trabalhistas decorrentes de sua atividade profissional.
+             <br><br><br><br>Cláusula Y - Da limitação de responsabilidade e Transações financeiras:
+            <br><br>Y.1. O aplicativo funciona meramente como um catálogo e canal de contato, NÃO sendo responsável, direta ou indiretamente, por any transação financeira, pagamento, negociação ou acordo realizado entre o prestador de serviço e o tomador/cliente.
+           <br><br>Y.2. Todas as transações financeiras, orçamentos e pagamentos são combinados e executados por fora ou de forma independente, sob total e exclusiva responsabilidade dos usuários envolvidos.
+           <br><br>Y.3. O aplicativo não outorga garantia de qualquer natureza sobre os serviços contratados, inclusive quanto à qualidade, segurança, prazos ou inadimplemento de pagamentos. O aplicativo exime-se de qualquer responsabilidade por perdas, danos, lucros cessantes, desavenças comerciais ou prejuízos de qualquer ordem decorrentes das interações e transações originadas por meio da plataforma.
+        </div>
+        <label style="font-size: 13px; margin-bottom: 10px; display: block;"><input type="checkbox" id="aceitoTermos"> Eu aceito os termos</label>
+       
+        <input type="text" id="nome" placeholder="👤 Nome Completo" class="input-linkup">
+        <input type="text" id="apelido" placeholder="🏷️ Apelido/Nome do Negócio" class="input-linkup">
+        <input type="text" id="funcao" placeholder="🛠️ O que você faz?" class="input-linkup">
+        <input type="tel" id="whatsapp" placeholder="📱 WhatsApp com DDD" class="input-linkup">
+        <input type="text" id="bairro" placeholder="📍 Seu Bairro/Cidade" class="input-linkup">
+       
+        <button onclick="irParaEtapa(3)" style="width: 100%; background: #ff8c00; color: white; border: none; padding: 15px; border-radius: 10px; font-weight: bold; cursor: pointer;">VER PLANOS ➡️</button>
+    </div>
+
+    <div id="etapa3" style="display:none; padding-top: 10px;">
+        <h3 style="text-align:center; color: #44749d;">Escolha seu Plano ✨</h3>
+        <div class="btn-plano" onclick="finalizar('Bronze')" style="border-color: #cd7f32;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size: 24px;">🥉</span>
+                <div><b>BRONZE</b><br><small>Card Padrão</small></div>
+            </div>
+            <div style="font-weight:bold; color:#cd7f32;">R$ 2,00</div>
+        </div>
+        <div class="btn-plano" onclick="finalizar('Prata')" style="border-color: #c0c0c0;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size: 24px;">🥈</span>
+                <div><b>PRATA 🔥</b><br><small>Faixa "Em Alta"</small></div>
+            </div>
+            <div style="font-weight:bold; color:#666;">R$ 5,00</div>
+        </div>
+        <div class="btn-plano" onclick="finalizar('Ouro')" style="border-color: #ffd700; background: #fffdf0;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size: 24px;">🥇</span>
+                <div><b>OURO 💎</b><br><small>Destaque Total</small></div>
+            </div>
+            <div style="font-weight:bold; color:#b8860b;">R$ 10,00</div>
+        </div>
+        <p style="font-size: 11px; color: #999; text-align: center;">*Pagamento mensal via PIX após o envio.</p>
+        <button onclick="irParaEtapa(2)" style="background:none; border:none; color:#999; cursor:pointer; width:100%; font-size:12px;">← Voltar</button>
+    </div>
+</div>
+
+<div id="modalInfo" class="modal-detalhes-linkup">
+    <div class="modal-detalhes-content">
+        <span class="fechar-detalhes" onclick="fecharModalInfo()">❌</span>
+        <div id="conteudoDetalhes"></div>
+    </div>
+</div>
+
+<div id="modalDepoimento" class="modal-depoimento-gustavo">
+    <div class="modal-depoimento-box">
+        <h3 style="color:#44749d; margin:0;">O que você achou? ⭐</h3>
+        <div class="star-rating" id="starsContainer">
+            <span onclick="setRating(1)">★</span><span onclick="setRating(2)">★</span><span onclick="setRating(3)">★</span><span onclick="setRating(4)">★</span><span onclick="setRating(5)">★</span>
+        </div>
+        <input type="text" id="depoimentoNome" placeholder="Seu nome..." class="input-linkup">
+        <textarea id="depoimentoTexto" placeholder="Sua opinião (máx 300 caracteres)..." maxlength="300" class="input-linkup" style="height:80px; resize:none;"></textarea>
+       
+        <p style="font-size: 13px; color: #555; margin-bottom: 10px;">Envie também um vídeo depoimento pelo WhatsApp após a sua avaliação</p>
+       
+        <button onclick="enviarDepoimentoZap()" class="btn-dar-depoimento">ENVIAR FEEDBACK NO WHATSAPP</button>
+        <button onclick="fecharModalDepoimento()" style="background:none; border:none; color:#999; margin-top:10px; cursor:pointer;">Cancelar</button>
+    </div>
+</div>
+
+<div id="modalDenuncia" class="modal-denuncia-gustavo">
+    <div class="modal-depoimento-box" style="border: 2px solid #d9534f;">
+        <h3 style="color:#d9534f; margin:0;">🚨 Denunciar Prestador</h3>
+        <p style="font-size: 14px; color: #333; margin: 15px 0 10px; font-weight: bold;" id="textoConfirmarDenuncia">Você realmente deseja denunciar este prestador de serviço?</p>
+       
+        <textarea id="denunciaMotivo" placeholder="Explique resumidamente o motivo da denúncia (ex: golpe, grosseria, não compareceu)..." maxlength="300" class="input-linkup" style="height:90px; resize:none;"></textarea>
+       
+        <button onclick="enviarDenunciaZap()" class="btn-denunciar-modal" style="margin-top: 10px;">CONFIRMAR E ENVIAR NO WHATSAPP</button>
+        <button onclick="fecharModalDenuncia()" style="background:none; border:none; color:#999; margin-top:12px; cursor:pointer; font-weight: bold;">Cancelar</button>
+    </div>
+</div>
+
+<div id="guZoomModal" class="gu-zoom-modal" onclick="fecharZoomGustavo()">
+    <span class="gu-zoom-fechar">&times;</span>
+    <img class="gu-zoom-img" id="guZoomImg">
+</div>
+
+<div id="guZoomVideoModal" class="gu-zoom-modal" onclick="fecharZoomVideoGustavo()">
+    <span class="gu-zoom-fechar">&times;</span>
+    <div class="gu-zoom-video-container" id="guZoomVideoContent"></div>
+</div>
+
+<div id="gu-instalar" style="display:none; position:fixed; bottom:0; left:0; right:0; background:#f39c12; color:white; padding:20px; text-align:center; z-index:99999; font-family:sans-serif; border-radius:15px 15px 0 0; box-shadow: 0 -4px 15px rgba(0,0,0,0.3);">
+    <strong style="display:block; margin-bottom:10px; font-size:16px;">🚀 NÃO PERCA O ACESSO!</strong>
+    <p style="margin:0 0 15px 0; font-size:14px;">Adicione o LinkUp à sua tela inicial para entrar sempre que precisar!</p>
+    <button onclick="avisarComoInstalar()" style="background:white; color:#f39c12; border:none; padding:12px 25px; font-weight:bold; border-radius:8px; cursor:pointer; width:100%; margin-bottom:10px;">COMO INSTALAR (Passo a Passo)</button>
+    <button onclick="ignorarAviso()" style="background:transparent; color:white; border:1px solid white; padding:8px; font-size:12px; border-radius:5px; cursor:pointer; width:100%; opacity:0.8;">Já instalei / Não perguntar mais</button>
+</div>
+
 <script>
+    // ========================================================
+    // NOVA LÓGICA: Textos e Controle da Tela Inicial de Termos
+    // ========================================================
+    const termosTextoCliente = `
+        <h4>1. O Aplicativo é uma Vitrine</h4>
+        <p>O Link Up funciona exclusivamente como um catálogo ou vitrine digital regional para aproximar prestadores de serviços autônomos e clientes. O aplicativo não interfere, não gerencia e não participa das contratações.</p>
+       
+        <h4>2. Ausência de Responsabilidade</h4>
+        <p>Todas as negociações, contratos, combinados de datas e execução dos trabalhos são feitos de forma 100% independente fora da plataforma através do WhatsApp. O desenvolvedor e a administração do aplicativo não possuem qualquer responsabilidade por serviços mal executados, incompletos, não entregues ou desacordos comerciais.</p>
+
+        <h4>3. Transações Financeiras</h4>
+        <p>Nenhum pagamento é processado pelo Link Up. Valores, orçamentos e meios de pagamento (como PIX ou dinheiro) são de inteira responsabilidade e risco do cliente e do prestador.</p>
+
+        <h4>4. Segurança e Canal de Denúncia</h4>
+        <p>Prezamos por uma comunidade honesta. Caso você sofra algum tipo de golpe, grosseria ou assédio por parte de um prestador, utilize imediatamente o botão <b>"🚨 DENUNCIAR PRESTADOR"</b> localizado dentro do perfil do profissional para reportar o caso diretamente à administração para que as medidas cabíveis de exclusão de cadastro sejam avaliadas.</p>
+    `;
+
+    const termosTextoPrestador = `
+        <h4>1. Atuação Autônoma</h4>
+        <p>Ao se cadastrar, o profissional reconhece que o Link Up é apenas um canal de divulgação. Não existe qualquer vínculo empregatício, subordinação ou dependência econômica com a administração da plataforma.</p>
+
+        <h4>2. Negociação Direta</h4>
+        <p>O profissional é o único responsável pelos preços praticados, emissão de recibos, garantias dadas aos clientes e cumprimento dos prazos prometidos diretamente via WhatsApp.</p>
+
+        <h4>3. Conteúdos Proibidos e Banimento</h4>
+        <p>É expressamente proibido anunciar ou associar o perfil a:</p>
+        <ul>
+            <li>Venda de animais silvestres ou exóticos;</li>
+            <li>Produtos ilícitos, entorpecentes, armas ou pirataria;</li>
+            <li>Práticas de preconceito, discriminação, discursos de ódio ou assédio moral/sexual.</li>
+        </ul>
+        <p>O descumprimento ou acúmulo de denúncias fundamentadas de clientes resultará no banimento imediato e permanente do perfil da nossa lista, sem direito a reembolsos de taxas de planos.</p>
+    `;
+
+    // Verifica se o usuário já aceitou os termos antes na vida dele
+    function gerenciarTelaTermos() {
+        const termosAceitos = localStorage.getItem('linkup_termos_aceitos_v1');
+        const tela = document.getElementById('telaInicialTermos');
+       
+        if (termosAceitos === 'true') {
+            tela.style.display = 'none'; // Se já aceitou no passado, esconde a tela direto
+        } else {
+            tela.style.display = 'flex'; // Caso contrário, mostra
+            alternarAbasTermos('cliente'); // Inicia mostrando os termos do cliente
+        }
+    }
+
+    function alternarAbasTermos(tipo) {
+        const btnCliente = document.getElementById('btnAbaCliente');
+        const btnPrestador = document.getElementById('btnAbaPrestador');
+        const caixaTexto = document.getElementById('textoTermos');
+
+        if (tipo === 'cliente') {
+            btnCliente.classList.add('aba-ativa');
+            btnPrestador.classList.remove('aba-tab', 'aba-ativa');
+            caixaTexto.innerHTML = termosTextoCliente;
+        } else {
+            btnPrestador.classList.add('aba-ativa');
+            btnCliente.classList.remove('aba-ativa');
+            caixaTexto.innerHTML = termosTextoPrestador;
+        }
+    }
+
+    function aceitarTermosIniciais() {
+        localStorage.setItem('linkup_termos_aceitos_v1', 'true');
+        document.getElementById('telaInicialTermos').style.display = 'none';
+    }
+
+    // Chama a verificação dos termos logo ao iniciar o script
+    gerenciarTelaTermos();
+
+    // Lógica Original do Aplicativo mantida intocada
+    const modoApp = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+    const jaIgnorou = localStorage.getItem('linkup_pwa_ignore');
+
+    if (!modoApp && jaIgnorou !== 'true') {
+        setTimeout(() => {
+            if(document.getElementById('gu-instalar')) {
+                document.getElementById('gu-instalar').style.display = 'block';
+            }
+        }, 2000);
+    }
+
+    function avisarComoInstalar() {
+        alert("É fácil!\n\n1. Clique nos 3 PONTINHOS no canto superior direito.\n2. Escolha 'ADICIONAR À TELA INICIAL'.\n3. Pronto!");
+    }
+
+    function ignorarAviso() {
+        localStorage.setItem('linkup_pwa_ignore', 'true');
+        document.getElementById('gu-instalar').style.display = 'none';
+    }
+
     let todosOsProdutos = [];
     let produtosEmbaralhados = [];
     let categoriaAtual = 'todos';
+    let currentRating = 0;
+    let profSelecionadoParaDepoimento = "";
 
-    // LINK ATUALIZADO AQUI
-    const sheetId = '1tPuavQtvVf147OX05Y4q8DIo5_HdtkmZelq4PCXq5eg';
-    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=loja`;
+    const sheetId = '1FvOMPzfXvC_-nfG0Vj_BoH6_qWAkwGFgED_hknT_a9Q';
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=loja&range=A:AR`;
+    const urlAPI_Likes = 'https://script.google.com/macros/s/AKfycbwFNYMY9GHydkzFddFBq8G0L6F_R7JCPVXHOTlkwwvyaYGR9R8-1RWdd2qDpzR14qqF/exec';
 
-    // LISTA MANUAL - COLOQUE O LINK ENTRE AS ASPAS EM link: ""
-    const segmentosLojas = [
+    const segmentsLojas = [
         { nome: "Lojas Link App: A maior loja de afiliados do Brasil", emoji: "🛒", link: "" },
         { nome: "Artigos de Recém Nascido 0 a 1", emoji: "👶", link: "https://gustavobueno301412-bit.github.io/loja-link-app-baby/index.html" },
         { nome: "Artigos Pet em Geral", emoji: "🐾", link: "" },
@@ -151,7 +730,7 @@
 
     window.onscroll = function() {
         const btn = document.getElementById("btnVoltarTopo");
-        btn.style.display = (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) ? "block" : "none";
+        if(btn) btn.style.display = (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) ? "block" : "none";
     };
 
     function voltarAoTopo() { window.scrollTo({top: 0, behavior: 'smooth'}); }
@@ -161,8 +740,14 @@
             const response = await fetch(url);
             const text = await response.text();
             const jsonData = JSON.parse(text.substring(47).slice(0, -2));
-            todosOsProdutos = jsonData.table.rows;
-            produtosEmbaralhados = [...todosOsProdutos].sort(() => Math.random() - 0.5);
+            let dadosDaPlanilha = jsonData.table.rows;
+
+            if (dadosDaPlanilha && dadosDaPlanilha.length > 0) {
+                let itemFixo = dadosDaPlanilha[0];
+                let resto = dadosDaPlanilha.slice(1);
+                resto.sort(() => Math.random() - 0.5);
+                produtosEmbaralhados = [itemFixo, ...resto];
+            }
             configurarBanners();
             mostrarProdutos();
         } catch (error) { console.error("Erro:", error); }
@@ -170,66 +755,292 @@
 
     function configurarBanners() {
         const bannerWrapper = document.getElementById('bannerApp');
+        if (!bannerWrapper) return;
         let htmlBanners = '';
         let count = 0;
-        todosOsProdutos.forEach((row) => {
-            const imgBanner = (row.c[2] && row.c[2].v) ? row.c[2].v : '';
-            const linkBanner = (row.c[1] && row.c[1].v) ? row.c[1].v : '#';
+
+        produtosEmbaralhados.forEach((row) => {
+            const imgBanner = (row.c && row.c[2] && row.c[2].v) ? row.c[2].v : '';
             if (imgBanner && imgBanner.includes('http')) {
-                htmlBanners += `<a href="${linkBanner}" target="_blank" class="banner-link"><img src="${imgBanner}" class="banner-img"></a>`;
+                htmlBanners += `<div onclick="prepararDetalhes(${produtosEmbaralhados.indexOf(row)})" style="min-width: 100%; height: 100%; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                    <img src="${imgBanner}" class="banner-img">
+                </div>`;
                 count++;
             }
         });
+
         bannerWrapper.innerHTML = htmlBanners;
         if (count > 1) {
             let index = 0;
-            setInterval(() => {
+            if (window.bannerInterval) clearInterval(window.bannerInterval);
+            window.bannerInterval = setInterval(() => {
                 index = (index + 1) % count;
-                bannerWrapper.style.transform = `translateX(${index * -100}%)`;
+                bannerWrapper.style.transform = 'translateX(' + (index * -100) + '%)';
             }, 4000);
         }
+    }
+
+    function prepararDetalhes(index) {
+        const row = produtosEmbaralhados[index];
+        const nome = row.c[3].v;
+        const desc = (row.c[10] && row.c[10].v) ? row.c[10].v : '';
+        const foto = row.c[8] ? row.c[8].v : '';
+        const link = row.c[9] ? row.c[9].v : '#';
+        const cat = row.c[5] ? row.c[5].v : '';
+        const segs = (row.c[13] && row.c[13].v) ? row.c[13].v : '0';
+        const uSeg = (row.c[14] && row.c[14].v) ? row.c[14].v : 'Nenhum';
+        const seloQ = (row.c[12] && row.c[12].v) ? row.c[12].v : 'não';
+       
+        const fotosExtras = [];
+        for(let i=15; i<=24; i++) { if(row.c[i] && row.c[i].v) fotosExtras.push(row.c[i].v); }
+       
+        const videosExtras = [];
+        for(let i=25; i<=28; i++) { if(row.c[i] && row.c[i].v) videosExtras.push(row.c[i].v); }
+
+        const videosDepoimentos = [];
+        for(let i=40; i<=43; i++) { if(row.c[i] && row.c[i].v) videosDepoimentos.push(row.c[i].v); }
+
+        const deps = [];
+        for(let i=30; i<=39; i++) {
+            if(row.c[i] && row.c[i].v && row.c[i].v.trim() !== "") {
+                deps.push({ texto: row.c[i].v, autor: "Cliente Verificado" });
+            }
+        }
+       
+        abrirDetalhes(nome, desc, foto, link, cat, segs, uSeg, seloQ, fotosExtras, videosExtras, deps, videosDepoimentos);
     }
 
     function mostrarProdutos(termo = '') {
         let html = '';
         const termoBusca = termo.toLowerCase().trim();
-        produtosEmbaralhados.forEach((row) => {
+        produtosEmbaralhados.forEach((row, index) => {
             if (!row.c[3] || row.c[3].v === "Nome") return;
+           
             const nome = row.c[3].v;
-            const preco = row.c[4] ? (row.c[4].f || row.c[4].v).toString() : '0,00';
             const categoria = row.c[5] ? row.c[5].v : '';
             const destaque = row.c[6] ? row.c[6].v.toLowerCase() : '';
             const tipo = row.c[7] ? row.c[7].v.toLowerCase() : '';
+            const preco = row.c[4] ? (row.c[4].f || row.c[4].v).toString() : 'Combine';
+            const likesCount = row.c[0] ? (row.c[0].v || 0) : 0;
             const foto = row.c[8] ? row.c[8].v : '';
             const link = row.c[9] ? row.c[9].v : '#';
-            const desc = (row.c[10] && row.c[10].v) ? row.c[10].v : 'Clique para ver mais detalhes.';
+            const desc = (row.c[10] && row.c[10].v) ? row.c[10].v : '';
 
-            if ((categoriaAtual === 'todos' || categoria.toLowerCase().trim() === categoriaAtual || (categoriaAtual === 'em-alta' && destaque === 'sim')) &&
-                (nome.toLowerCase().includes(termoBusca) || tipo.includes(termoBusca) || preco.includes(termoBusca))) {
+            if ((categoriaAtual === 'todos' || categoria.toLowerCase().trim() === categoriaAtual || (categoriaAtual === 'em-destaque' && destaque === 'sim')) &&
+                (nome.toLowerCase().includes(termoBusca) || tipo.includes(termoBusca))) {
                
                 let btnClass = 'btn-ml', btnTexto = `🛒 MERCADO LIVRE 🤝🏻`;
                 if(tipo.includes('hotmart')) { btnClass = 'btn-hotmart'; btnTexto = `🛒 HOTMART 🔥`; }
                 else if(tipo.includes('magalu')) { btnClass = 'btn-magalu'; btnTexto = `🛒 MAGALU 🙋🏻‍♂️`; }
                 else if(tipo.includes('amazon')) { btnClass = 'btn-amazon'; btnTexto = `🛒 AMAZON 📦`; }
                 else if(tipo.includes('shopee')) { btnClass = 'btn-shopee'; btnTexto = `🛒 SHOPEE 🛍️`; }
-                else if(tipo.includes('shein')) { btnClass = 'btn-shein'; btnTexto = `🛒 SHEIN 🏷️`; }
-                else if(tipo.includes('temu')) { btnClass = 'btn-temu'; btnTexto = `🛒 TEMU 👔`; }
-                else if(tipo.includes('aliexpress')) { btnClass = 'btn-aliexpress'; btnTexto = `🛒 ALIEXPRESS 👜`; }
-                else if(tipo.includes('monetizze')) { btnClass = 'btn-monetizze'; btnTexto = `🛒 MONETIZZE 💰`; }
+                else if(tipo.includes('whatsapp')) { btnClass = 'btn-whatsapp'; btnTexto = `📞 WHATSAPP 📱`; }
                
-                html += `<div class="produto-card">
-                    ${destaque === 'sim' ? '<div class="selo-destaque">MAIS VENDIDO 🔥</div>' : ''}
-                    <button class="btn-ws-card" onclick="compartilharProduto('${nome}', '${link}')"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></button>
+                html += `<div class="produto-card" onclick="prepararDetalhes(${index})" style="cursor:pointer;">
+                    ${destaque === 'sim' ? '<div class="selo-destaque">EM DESTAQUE 🔥</div>' : ''}
+                    <button class="btn-ws-card" onclick="event.stopPropagation(); compartilharProduto('${nome}', '${link}')"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"></button>
                     <img src="${foto}" class="img-produto" onerror="this.src='https://via.placeholder.com/150'">
                     <div class="produto-cat-label">${categoria}</div>
                     <div class="produto-nome">${nome}</div>
+                   
+                    <button class="btn-like" onclick="event.stopPropagation(); curtirProfissional('${nome}', this)">
+                        <span class="like-icon">❤️</span> <span class="num-likes">${likesCount}</span>
+                    </button>
+
                     <div class="produto-desc-label">${desc}</div>
-                    <div class="produto-preco">R$ ${preco}</div>
-                    <a href="${link}" target="_blank" class="btn ${btnClass}">${btnTexto}</a>
+                    <div class="produto-preco">${preco}</div>
+                    <a href="${link}" target="_blank" onclick="event.stopPropagation();" class="btn ${btnClass}">${btnTexto}</a>
                 </div>`;
             }
         });
         document.getElementById('vitrine').innerHTML = html;
+    }
+
+    async function curtirProfissional(nome, botao) {
+        const spanLikes = botao.querySelector('.num-likes');
+        botao.style.background = "#ffebee";
+        try {
+            await fetch(urlAPI_Likes, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ "nome": nome })
+            });
+            let valorAtual = parseInt(spanLikes.innerText) || 0;
+            spanLikes.innerText = valorAtual + 1;
+        } catch (e) { console.error("Erro no like:", e); }
+    }
+
+    function formatarLinkYoutube(url) {
+        if (!url) return "";
+        let id = "";
+        if (url.includes("shorts/")) {
+            id = url.split("shorts/")[1].split("?")[0].split("&")[0];
+        } else if (url.includes("watch?v=")) {
+            id = url.split("v=")[1].split("&")[0];
+        } else if (url.includes("youtu.be/")) {
+            id = url.split("youtu.be/")[1].split("?")[0].split("&")[0];
+        }
+        return id ? `https://www.youtube.com/embed/${id}?rel=0` : url;
+    }
+
+    function abrirDetalhes(nome, textoE, imagemC, linkJ, categoria, segs, uSeg, seloQ, fotosExtras = [], videosExtras = [], depoimentos = [], videosDepoimentos = []) {
+        profSelecionadoParaDepoimento = nome;
+        const modal = document.getElementById('modalInfo');
+        const conteudo = document.getElementById('conteudoDetalhes');
+       
+        const msgSeguir = encodeURIComponent(`Olá Gustavo! Estou seguindo o(a) profissional: ${nome}. Adiciona +1 seguidor para ele(a) na planilha! 🚀`);
+        const linkSeguir = `https://wa.me/5512992448264?text=${msgSeguir}`;
+
+        let htmlSelo = (seloQ.toLowerCase() === "sim") ? `
+            <div style="display: inline-flex; align-items: center; background: linear-gradient(135deg, #FFD700, #FFA500); color: #fff; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; margin: 10px 0; box-shadow: 0px 2px 4px rgba(0,0,0,0.2); border: 1px solid #DAA520;">
+                <span style="margin-right: 5px;">🌟</span> PARCEIRO DE QUALIDADE
+            </div>` : "";
+
+        let htmlGradeFotos = "";
+        if (fotosExtras.length > 0) {
+            htmlGradeFotos = `<div class="titulo-grade-fotos">🔥 TRABALHOS REALIZADOS 🔥</div><div class="grade-fotos-gustavo">`;
+            fotosExtras.forEach(f => { if(f && f.includes('http')) htmlGradeFotos += `<img src="${f}" onclick="abrirZoomGustavo('${f}')" onerror="this.style.display='none'">`; });
+            htmlGradeFotos += `</div>`;
+        }
+
+        let htmlGradeVideos = "";
+        if (videosExtras.length > 0) {
+            htmlGradeVideos = `<div class="titulo-grade-fotos">🎥 VÍDEOS E DEMONSTRAÇÕES 🎥</div><div class="grade-fotos-gustavo">`;
+            videosExtras.forEach(v => {
+                if(v && v.includes('http')) {
+                    let embedUrl = formatarLinkYoutube(v);
+                    htmlGradeVideos += `
+                    <div style="position:relative;">
+                        <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
+                        <div onclick="abrirZoomVideoGustavo('${embedUrl}')" style="position:absolute; top:0; left:0; width:100%; height:100%; cursor:pointer; background:transparent;"></div>
+                    </div>`;
+                }
+            });
+            htmlGradeVideos += `</div>`;
+        }
+
+        let htmlGradeVideosDepo = "";
+        if (videosDepoimentos.length > 0) {
+            htmlGradeVideosDepo = `<div class="titulo-grade-fotos">🎥 VÍDEOS DEPOIMENTOS 🎥</div><div class="grade-fotos-gustavo">`;
+            videosDepoimentos.forEach(v => {
+                if(v && v.includes('http')) {
+                    let embedUrl = formatarLinkYoutube(v);
+                    htmlGradeVideosDepo += `
+                        <div class="video-depo-box">
+                            <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
+                        </div>`;
+                }
+            });
+            htmlGradeVideosDepo += `</div>`;
+        }
+
+        let htmlDepoimentos = `<div class="secao-depoimentos"><h3 style="color:#44749d;">Avaliações de Clientes ⭐</h3>`;
+        if(depoimentos.length > 0) {
+            depoimentos.forEach(d => {
+                htmlDepoimentos += `
+                <div class="depoimento-item">
+                    <div class="depoimento-meta">
+                        <span>👤 ${d.autor}</span>
+                        <span style="color: #f39c12;">★★★★★</span>
+                    </div>
+                    <div class="depoimento-texto">"${d.texto}"</div>
+                </div>`;
+            });
+        } else {
+            htmlDepoimentos += `<p style="font-size:12px; color:#999;">Ainda não há avaliações. Seja o primeiro!</p>`;
+        }
+        htmlDepoimentos += `<button class="btn-dar-depoimento" onclick="abrirModalDepoimento()">AVALIAR ESTE PROFISSIONAL</button></div>`;
+
+        conteudo.innerHTML = `
+            <img src="${imagemC}" onclick="abrirZoomGustavo('${imagemC}')" style="width: 100%; max-height: 250px; border-radius: 20px; object-fit: contain; margin-bottom: 15px; cursor: pointer;">
+            <h2 style="color: #44749d; margin: 0;">${nome}</h2>
+            <div style="text-align: left; margin-top: 15px; font-size: 17px; color: #333; white-space: pre-wrap; line-height: 1.5;">${textoE}</div>
+            ${htmlSelo}
+            <div style="margin: 10px 0;"><span style="background: #eef2f7; padding: 5px 12px; border-radius: 10px; color: #44749d; font-weight: bold; font-size: 14px;">✨ ${categoria}</span></div>
+            <div style="background: #f8f9fa; border: 1px solid #eee; padding: 10px; border-radius: 15px; margin: 15px 0; display: flex; justify-content: space-around; align-items: center;">
+                <div><div style="font-size: 12px; color: #666;">SEGUIDORES</div><div style="font-size: 20px; font-weight: bold; color: #44749d;">👤 ${segs}</div></div>
+                <div style="border-left: 1px solid #ddd; height: 30px;"></div>
+                <div><div style="font-size: 12px; color: #666;">ÚLTIMO SEGUIDOR</div><div style="font-size: 14px; font-weight: bold; color: #333;">⭐ ${uSeg}</div></div>
+            </div>
+            ${htmlGradeFotos}
+            ${htmlGradeVideos}
+            ${htmlDepoimentos}
+            ${htmlGradeVideosDepo}
+            <button onclick="window.open('${linkSeguir}', '_blank')" class="btn-seguir-modal">➕ SEGUIR PROFISSIONAL</button>
+            <a href="${linkJ}" target="_blank" class="btn-zap-modal"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="22"> FALAR NO WHATSAPP</a>
+            <button onclick="abrirModalDenuncia()" class="btn-denunciar-modal">🚨 DENUNCIAR PRESTADOR DE SERVIÇO</button>
+        `;
+        modal.style.display = 'flex';
+    }
+
+    function abrirZoomGustavo(src) {
+        const modalZoom = document.getElementById('guZoomModal');
+        const imgZoom = document.getElementById('guZoomImg');
+        imgZoom.src = src;
+        modalZoom.style.display = 'flex';
+    }
+
+    function fecharZoomGustavo() {
+        document.getElementById('guZoomModal').style.display = 'none';
+    }
+
+    function abrirZoomVideoGustavo(url) {
+        const modalVideo = document.getElementById('guZoomVideoModal');
+        const contentVideo = document.getElementById('guZoomVideoContent');
+        contentVideo.innerHTML = `<iframe src="${url}?autoplay=1" style="width:100%; height:100%; border-radius:10px;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+        modalVideo.style.display = 'flex';
+    }
+
+    function fecharZoomVideoGustavo() {
+        const modalVideo = document.getElementById('guZoomVideoModal');
+        const contentVideo = document.getElementById('guZoomVideoContent');
+        contentVideo.innerHTML = "";
+        modalVideo.style.display = 'none';
+    }
+
+    function abrirModalDepoimento() { document.getElementById('modalDepoimento').style.display='flex'; }
+    function fecharModalDepoimento() { document.getElementById('modalDepoimento').style.display='none'; }
+    function setRating(n) {
+        currentRating = n;
+        let stars = document.querySelectorAll('.star-rating span');
+        stars.forEach((s, idx) => {
+            if(idx < n) s.classList.add('selected');
+            else s.classList.remove('selected');
+        });
+    }
+    function enviarDepoimentoZap() {
+        let nomeC = document.getElementById('depoimentoNome').value;
+        let textoC = document.getElementById('depoimentoTexto').value;
+        if(!nomeC || !textoC || currentRating === 0) return alert("Preencha todos os campos.");
+       
+        let msg = `Olá Gustavo! Novo depoimento para: ${profSelecionadoParaDepoimento}\nNota: ${currentRating} ⭐\nCliente: ${nomeC}\nDepoimento: ${textoC}`;
+        window.open(`https://wa.me/5512992448264?text=${encodeURIComponent(msg)}`);
+        fecharModalDepoimento();
+    }
+
+    function abrirModalDenuncia() {
+        document.getElementById('textoConfirmarDenuncia').innerText = `Realmente deseja denunciar o prestador de serviço: ${profSelecionadoParaDepoimento}?`;
+        document.getElementById('denunciaMotivo').value = "";
+        document.getElementById('modalDenuncia').style.display = 'flex';
+    }
+
+    function fecharModalDenuncia() {
+        document.getElementById('modalDenuncia').style.display = 'none';
+    }
+
+    function enviarDenunciaZap() {
+        let motivo = document.getElementById('denunciaMotivo').value;
+        if(!motivo || motivo.trim() === "") return alert("Por favor, digite o motivo da sua denúncia.");
+
+        let msgDenuncia = `⚠️ ALERTA DE DENÚNCIA ⚠️\n\nPrestador Denunciado: ${profSelecionadoParaDepoimento}\nMotivo relatado pelo cliente:\n"${motivo}"`;
+        window.open(`https://wa.me/5512992448264?text=${encodeURIComponent(msgDenuncia)}`);
+        fecharModalDenuncia();
+    }
+
+    function fecharModalInfo() {
+        document.getElementById('modalInfo').style.display = 'none';
+        document.getElementById('conteudoDetalhes').innerHTML = "";
     }
 
     function filtrar(cat, btn) {
@@ -239,24 +1050,33 @@
         mostrarProdutos();
     }
 
-    function executarBusca() { mostrarProdutos(document.getElementById('inputBusca').value); }
+    function executarBusca() {
+    const campo = document.getElementById('inputBusca');
+    const valor = campo ? campo.value : '';
+   
+    // Forçamos a atualização da vitrine com o valor que foi digitado
+    mostrarProdutos(valor);
+}
+
 
     async function compartilharProduto(nome, link) {
+        const texto = `Olha o contato do(a) ${nome} no Link-Up! 🚀`;
         if (navigator.share) {
-            try { await navigator.share({ title: nome, text: `Olha isso: ${nome}`, url: link }); } catch (err) {}
+            try { await navigator.share({ title: 'Link-Up', text: texto, url: link }); } catch (err) {}
         } else {
-            navigator.clipboard.writeText(`${nome} ${link}`);
-            alert("Link copiado!");
+            navigator.clipboard.writeText(`${texto} ${link}`);
+            alert("Copiado! ✅");
         }
     }
 
     async function compartilharLoja() {
         const urlLoja = window.location.href;
+        const texto = 'App dos melhores profissionais de Cruzeiro! 🛠️🚀';
         if (navigator.share) {
-            try { await navigator.share({ title: 'Loja Link App Pet', text: 'Confira as melhores ofertas!', url: urlLoja }); } catch (err) {}
+            try { await navigator.share({ title: 'Link-Up App', text: texto, url: urlLoja }); } catch (err) {}
         } else {
-            navigator.clipboard.writeText(`Confira a Loja Link App Pet: ${urlLoja}`);
-            alert("Link da loja copiado!");
+            navigator.clipboard.writeText(`${texto} ${urlLoja}`);
+            alert("Link copiado! ✅");
         }
     }
 
@@ -266,28 +1086,30 @@
         modal.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; display:flex; justify-content:center; align-items:center;";
         let conteudo = document.createElement('div');
         conteudo.style = "background:#fff; width:90%; max-width:400px; max-height:80vh; overflow-y:auto; border-radius:15px; padding:20px; position:relative; font-family: sans-serif;";
-       
-        let htmlLista = `<h3 style="text-align:center; margin-bottom:20px;">Escolha uma Loja</h3>
-            <button onclick="document.getElementById('meuModalFlutuante').remove()" style="position:absolute; top:10px; right:10px; border:none; background:none; font-size:20px; cursor:pointer;">✕</button>`;
-
-        segmentosLojas.forEach((seg) => {
-            // AGORA USA O LINK MANUAL DEFINIDO NA LISTA segmentosLojas
-            let acao = (seg.link && seg.link !== "")
-                ? `<a href="${seg.link}" target="_blank" style="background:#228B22; color:white; padding:6px 12px; border-radius:8px; text-decoration:none; font-size:12px; font-weight:bold;">Entrar</a>`
-                : `<span style="color:#bbb; font-size:12px; font-style:italic;">Em breve 🚀</span>`;
-           
+        let htmlLista = `<h3 style="text-align:center; margin-bottom:20px;">Escolha uma Loja</h3><button onclick="document.getElementById('meuModalFlutuante').remove()" style="position:absolute; top:10px; right:10px; border:none; background:none; font-size:20px; cursor:pointer;">✕</button>`;
+        segmentsLojas.forEach((seg) => {
+            let acao = (seg.link && seg.link !== "") ? `<a href="${seg.link}" target="_blank" style="background:#228B22; color:white; padding:6px 12px; border-radius:8px; text-decoration:none; font-size:12px; font-weight:bold;">Entrar</a>` : `<span style="color:#bbb; font-size:12px; font-style:italic;">Em breve 🚀</span>`;
             htmlLista += `<div style="display:flex; justify-content:space-between; align-items:center; padding:12px; border-bottom:1px solid #eee;"><span style="font-size:14px;">${seg.emoji} ${seg.nome}</span>${acao}</div>`;
         });
-       
         conteudo.innerHTML = htmlLista;
         modal.appendChild(conteudo);
         document.body.appendChild(modal);
+    }
+
+    function abrirCadastro() { document.getElementById('modalCadastro').style.display='block'; document.getElementById('overlay').style.display='block'; }
+    function fecharModal() { document.getElementById('modalCadastro').style.display='none'; document.getElementById('overlay').style.display='none'; }
+    function irParaEtapa(n) {
+        if(n==3 && !document.getElementById('aceitoTermos').checked) return alert("Aceite os termos.");
+        document.getElementById('etapa1').style.display='none'; document.getElementById('etapa2').style.display='none'; document.getElementById('etapa3').style.display='none';
+        document.getElementById('etapa'+n).style.display='block';
+    }
+    function finalizar(plano) {
+        let msg = `Olá Gustavo! Novo cadastro.\n🏆 Plano: ${plano}\n👤 Nome: ${document.getElementById('nome').value}\n🏷️ Apelido: ${document.getElementById('apelido').value}\n🛠️ Serviço: ${document.getElementById('funcao').value}\n📱 Zap: ${document.getElementById('whatsapp').value}\n📍 Bairro: ${document.getElementById('bairro').value}`;
+        window.open(`https://wa.me/5512992448264?text=${encodeURIComponent(msg)}`);
+        fecharModal();
     }
 
     carregarDados();
 </script>
 </body>
 </html>
-
- 
-
